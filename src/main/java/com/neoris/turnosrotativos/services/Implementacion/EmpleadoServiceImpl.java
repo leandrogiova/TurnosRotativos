@@ -1,6 +1,7 @@
 package com.neoris.turnosrotativos.services.Implementacion;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +18,23 @@ public class EmpleadoServiceImpl {
     private EmpleadoRepository empleadoRepository;
 
     public void agregarEmpleado(Empleado empleado) {
+        empleado.setearfechaDeCreacion();
         empleadoRepository.save(empleado);
     }
 
     public List<Empleado> obtenerTodosLosEmpleados() {
+        return empleadoRepository.findAll();
 
-        if (empleadoRepository.findAll().isEmpty()) {
-            return null;
+    }
+
+    public EmpleadoDTO obtenerEmpleado(Long id) {
+        Optional<Empleado> empleado = empleadoRepository.findById(id);
+
+        if (empleado.isPresent()) {
+            return empleado.get().toEmpleadoDTO();
         } else {
-            return empleadoRepository.findAll();
+            return null;
         }
-
     }
 
 }

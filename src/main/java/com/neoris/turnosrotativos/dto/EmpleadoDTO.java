@@ -12,6 +12,7 @@ public class EmpleadoDTO {
     private String email;
     private LocalDate fechaNacimiento;
     private LocalDate fechaIngreso;
+    private LocalDate fechaCreacion;
 
     public Long getId() {
         return id;
@@ -67,6 +68,14 @@ public class EmpleadoDTO {
 
     public void setFechaIngreso(LocalDate fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
+    }
+
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDate fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public Empleado toEntity() {
