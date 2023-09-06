@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.neoris.turnosrotativos.entities.Empleado;
+
 @SpringBootApplication
 public class TurnosrotativosApplication {
 
@@ -17,6 +19,9 @@ public class TurnosrotativosApplication {
 		logger.info("===========================================");
 		logger.info("============    APP RUNNING    ============");
 		logger.info("===========================================");
+
+		Empleado empleado1 = new Empleado();
+		empleado1.setearfechaDeCreacion();
 	}
 
 	@Bean
