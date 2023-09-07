@@ -25,15 +25,10 @@ public class EmpleadoController {
     private EmpleadoServiceImpl empleadoService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public void agregarEmpleado(@RequestBody EmpleadoDTO empleadoDTO) {
-        /*
-         * Empleado empleado1 = new Empleado();
-         * empleado1 = empleadoDTO.toEntity();
-         * empleado1.setearfechaDeCreacion();
-         * empleadoDTO = empleado1.toEmpleadoDTO();
-         */
+    public ResponseEntity<EmpleadoDTO> agregarEmpleado(@RequestBody EmpleadoDTO empleadoDTO) {
 
-        empleadoService.agregarEmpleado(empleadoDTO.toEntity());
+        return new ResponseEntity<EmpleadoDTO>(empleadoService.agregarEmpleado(empleadoDTO.toEntity()),
+                HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.GET)

@@ -129,8 +129,9 @@ public class Empleado {
         empleadoDTO.setNombre(this.nombre);
         empleadoDTO.setApellido(this.apellido);
         empleadoDTO.setEmail(this.email);
-        empleadoDTO.setFechaNacimiento(fechaNacimiento);
-        empleadoDTO.setFechaIngreso(fechaIngreso);
+        empleadoDTO.setFechaNacimiento(this.fechaNacimiento);
+        empleadoDTO.setFechaIngreso(this.fechaIngreso);
+        empleadoDTO.setFechaCreacion(this.fechaCreacion);
 
         return empleadoDTO;
     }
