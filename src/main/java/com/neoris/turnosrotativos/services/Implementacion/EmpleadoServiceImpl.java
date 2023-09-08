@@ -18,42 +18,101 @@ public class EmpleadoServiceImpl {
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
+    /*
+     * public EmpleadoDTO agregarEmpleado(Empleado empleado) {
+     * 
+     * if (validarDNI(empleado)) {
+     * throw new
+     * BussinessException("Ya existe un empleado con el documento ingresado.");
+     * } else {
+     * 
+     * if (validarEmail(empleado)) {
+     * throw new
+     * BussinessException("Ya existe un empleado con ese mail ingresado.");
+     * } else {
+     * 
+     * if (mayorDeEdad(empleado)) {
+     * 
+     * if (validarFecha(empleado.getFechaNacimiento())) {
+     * if (validarFecha(empleado.getFechaIngreso())) {
+     * 
+     * if (validarNombreApellido(empleado.getNombre())) {
+     * if (validarNombreApellido(empleado.getApellido())) {
+     * empleado.setNombre(empleado.setearNombreApellido(empleado.getNombre()));
+     * empleado.setApellido(empleado.setearNombreApellido(empleado.getApellido()));
+     * 
+     * empleado.setearfechaDeCreacion();
+     * empleadoRepository.save(empleado);
+     * return empleado.toEmpleadoDTO();
+     * } else {
+     * throw new BussinessException(
+     * "El apellido no puede contener caracteres especiales ni numericos.");
+     * }
+     * } else {
+     * throw new BussinessException(
+     * "El nombre no puede contener caracteres especiales ni numericos.");
+     * }
+     * 
+     * } else {
+     * throw new BussinessException(
+     * "La fecha de ingreso no puede ser posterior al día de la fecha.");
+     * }
+     * 
+     * } else {
+     * throw new BussinessException(
+     * "La fecha de nacimiento no puede ser posterior al día de la fecha.");
+     * }
+     * 
+     * } else {
+     * throw new
+     * BussinessException("La edad del empleado no puede ser menor a 18 años");
+     * }
+     * 
+     * }
+     * 
+     * }
+     * 
+     * }
+     */
 
     public EmpleadoDTO agregarEmpleado(Empleado empleado) {
-
         if (validarDNI(empleado)) {
             throw new BussinessException("Ya existe un empleado con el documento ingresado.");
-        } else {
-
-            if (validarEmail(empleado)) {
-                throw new BussinessException("Ya existe un empleado con ese mail ingresado.");
-            } else {
-
-                if (mayorDeEdad(empleado)) {
-
-                    if (validarFecha(empleado.getFechaNacimiento())) {
-                        if (validarFecha(empleado.getFechaIngreso())) {
-                            empleado.setearfechaDeCreacion();
-                            empleadoRepository.save(empleado);
-                            return empleado.toEmpleadoDTO();
-                        } else {
-                            throw new BussinessException(
-                                    "La fecha de ingreso no puede ser posterior al día de la fecha.");
-                        }
-
-                    } else {
-                        throw new BussinessException(
-                                "La fecha de nacimiento no puede ser posterior al día de la fecha.");
-                    }
-
-                } else {
-                    throw new BussinessException("La edad del empleado no puede ser menor a 18 años");
-                }
-
-            }
-
         }
 
+        if (validarEmail(empleado)) {
+            throw new BussinessException("Ya existe un empleado con ese mail ingresado.");
+        }
+
+        if (!mayorDeEdad(empleado)) {
+            throw new BussinessException("La edad del empleado no puede ser menor a 18 años");
+        }
+
+        if (!validarFecha(empleado.getFechaNacimiento())) {
+            throw new BussinessException("La fecha de nacimiento no puede ser posterior al día de la fecha.");
+        }
+
+        if (!validarFecha(empleado.getFechaIngreso())) {
+            throw new BussinessException("La fecha de ingreso no puede ser posterior al día de la fecha.");
+        }
+
+        if (!validarNombreApellido(empleado.getNombre())) {
+            throw new BussinessException("Solo se permiten letras en el campo 'nombre'");
+        }
+
+        if (!validarNombreApellido(empleado.getApellido())) {
+            throw new BussinessException("Solo se permiten letras en el campo 'apellido'");
+        }
+
+        // Realiza los cambios necesarios en nombre y apellido antes de guardar
+        empleado.setNombre(empleado.setearNombreApellido(empleado.getNombre()));
+        empleado.setApellido(empleado.setearNombreApellido(empleado.getApellido()));
+
+        // Realiza el proceso de creación del empleado
+        empleado.setearfechaDeCreacion();
+        empleadoRepository.save(empleado);
+
+        return empleado.toEmpleadoDTO();
     }
 
     // TODO agregar validar el nombre y el apellido
@@ -129,6 +188,36 @@ public class EmpleadoServiceImpl {
     public Boolean validarFecha(LocalDate fecha) {
         LocalDate fechaActual = LocalDate.now();
         return !fecha.isAfter(fechaActual);
+    }
+
+    /*
+     * Funcion validarNombreApellido
+     * Retorna true si el String contiene solamente letras
+     * Ademas pone en mayusculas al primer caracter y al resto en minusculas
+     * para que en la base de datos se guarde de forma homogénea
+     * Recibe un String
+     * Retorna true si el String contiene solo letras
+     */
+    public Boolean validarNombreApellido(String stringNombreApellido) {
+
+        char primerCaracter = Character.toUpperCase(stringNombreApellido.charAt(0));
+
+        String restoCadena = stringNombreApellido.substring(1).toLowerCase();
+
+        stringNombreApellido = primerCaracter + restoCadena;
+
+        // Verificamos si la cadena resultante contiene solo letras
+        for (char c : stringNombreApellido.toCharArray()) {
+            if (!Character.isLetter(c)) {
+                System.out.println(stringNombreApellido + " no es válido.");
+                return false;
+            }
+        }
+
+        // Si hemos llegado hasta aquí, la cadena es válida y ha sido formateada
+        // correctamente
+        System.out.println(stringNombreApellido + " es válido.");
+        return true;
     }
 
 }

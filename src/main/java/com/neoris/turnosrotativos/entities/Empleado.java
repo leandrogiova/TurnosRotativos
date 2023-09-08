@@ -122,7 +122,9 @@ public class Empleado {
     }
 
     /*
-     * 
+     * funcion EmpleadoDTO
+     * Transforma una clase Empleado a una clase empleadoDTO
+     * Para su cominucacion al exterior
      */
     public EmpleadoDTO toEmpleadoDTO() {
         EmpleadoDTO empleadoDTO = new EmpleadoDTO();
@@ -137,6 +139,26 @@ public class Empleado {
         empleadoDTO.setFechaCreacion(this.fechaCreacion);
 
         return empleadoDTO;
+    }
+
+    /*
+     * funcion setearNombreApellido
+     * Trasnsdorma un String con la primer letra en mayusculas
+     * y el resto de las letras en minusculas
+     * No verifica si el string contiene numeros o letras ya que se va a utilizar
+     * luego de verificar si el string contiene solamente letras y no caracteres
+     * especiales
+     * Recibe como parametro un String
+     * Retorna un String con la primer letra mayuscula y el resto en minusculas
+     * Ejemplo: setearNombreApellido("LeAnDro") ==> "Leandro"
+     */
+    public String setearNombreApellido(String stringNombreApellido) {
+        char primerCaracter = Character.toUpperCase(stringNombreApellido.charAt(0));
+
+        String restoCadena = stringNombreApellido.substring(1).toLowerCase();
+
+        stringNombreApellido = primerCaracter + restoCadena;
+        return stringNombreApellido;
     }
 
 }
