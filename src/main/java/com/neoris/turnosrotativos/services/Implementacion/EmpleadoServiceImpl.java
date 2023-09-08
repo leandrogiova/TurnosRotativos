@@ -18,62 +18,6 @@ public class EmpleadoServiceImpl {
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
-    /*
-     * public EmpleadoDTO agregarEmpleado(Empleado empleado) {
-     * 
-     * if (validarDNI(empleado)) {
-     * throw new
-     * BussinessException("Ya existe un empleado con el documento ingresado.");
-     * } else {
-     * 
-     * if (validarEmail(empleado)) {
-     * throw new
-     * BussinessException("Ya existe un empleado con ese mail ingresado.");
-     * } else {
-     * 
-     * if (mayorDeEdad(empleado)) {
-     * 
-     * if (validarFecha(empleado.getFechaNacimiento())) {
-     * if (validarFecha(empleado.getFechaIngreso())) {
-     * 
-     * if (validarNombreApellido(empleado.getNombre())) {
-     * if (validarNombreApellido(empleado.getApellido())) {
-     * empleado.setNombre(empleado.setearNombreApellido(empleado.getNombre()));
-     * empleado.setApellido(empleado.setearNombreApellido(empleado.getApellido()));
-     * 
-     * empleado.setearfechaDeCreacion();
-     * empleadoRepository.save(empleado);
-     * return empleado.toEmpleadoDTO();
-     * } else {
-     * throw new BussinessException(
-     * "El apellido no puede contener caracteres especiales ni numericos.");
-     * }
-     * } else {
-     * throw new BussinessException(
-     * "El nombre no puede contener caracteres especiales ni numericos.");
-     * }
-     * 
-     * } else {
-     * throw new BussinessException(
-     * "La fecha de ingreso no puede ser posterior al día de la fecha.");
-     * }
-     * 
-     * } else {
-     * throw new BussinessException(
-     * "La fecha de nacimiento no puede ser posterior al día de la fecha.");
-     * }
-     * 
-     * } else {
-     * throw new
-     * BussinessException("La edad del empleado no puede ser menor a 18 años");
-     * }
-     * 
-     * }
-     * 
-     * }
-     * 
-     * }
-     */
 
     public EmpleadoDTO agregarEmpleado(Empleado empleado) {
         if (validarDNI(empleado)) {
