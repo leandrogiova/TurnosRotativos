@@ -3,6 +3,11 @@ package com.neoris.turnosrotativos.entities;
 import java.time.LocalDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.beans.factory.annotation.Required;
 
 import com.neoris.turnosrotativos.dto.EmpleadoDTO;
 
@@ -16,13 +21,16 @@ public class Empleado {
     private Long id;
 
     @Column(name = "nro_documento")
+
     private Integer nroDocumento;
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "apellido")
     private String apellido;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
     @Column(name = "fecha_ingreso")

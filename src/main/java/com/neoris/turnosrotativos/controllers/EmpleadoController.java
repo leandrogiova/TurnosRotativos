@@ -25,7 +25,7 @@ public class EmpleadoController {
     private EmpleadoServiceImpl empleadoService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<EmpleadoDTO> agregarEmpleado(@RequestBody EmpleadoDTO empleadoDTO) {
+    public ResponseEntity<EmpleadoDTO> agregarEmpleado(@Valid @RequestBody EmpleadoDTO empleadoDTO) {
 
         return new ResponseEntity<EmpleadoDTO>(empleadoService.agregarEmpleado(empleadoDTO.toEntity()),
                 HttpStatus.CREATED);

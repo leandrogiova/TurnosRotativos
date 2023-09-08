@@ -2,15 +2,29 @@ package com.neoris.turnosrotativos.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.neoris.turnosrotativos.entities.Empleado;
 
 public class EmpleadoDTO {
+
     private Long id;
+    @NotNull(message = "El campo nroDocumento es obligatorio")
     private Integer nroDocumento;
+    @NotNull(message = "El campo nombre es obligatorio")
+    @NotBlank(message = "El campo nombre no puede estar vacio")
     private String nombre;
+    @NotNull(message = "El campo apellido es obligatorio")
+    @NotBlank(message = "El campo apellido no puede estar vacio")
     private String apellido;
+    @NotNull(message = "El campo email es obligatorio")
+    @Email(message = "El email ingresado no es correcto.")
     private String email;
+    @NotNull(message = "El campo fechaNacimiento es obligatorio")
     private LocalDate fechaNacimiento;
+    @NotNull(message = "El campo fechaIngreso es obligatorio")
     private LocalDate fechaIngreso;
     private LocalDate fechaCreacion;
 
