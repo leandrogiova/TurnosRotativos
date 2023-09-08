@@ -3,11 +3,6 @@ package com.neoris.turnosrotativos.entities;
 import java.time.LocalDate;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.beans.factory.annotation.Required;
 
 import com.neoris.turnosrotativos.dto.EmpleadoDTO;
 
