@@ -16,3 +16,12 @@ VALUES (12, 38828888, 'Pablo', 'Vannella', 'pablovannelli@gmail.com', '1992-08-1
 
 INSERT INTO conceptos (id, hs_minimo, hs_maximo, laborable, nombre)
 VALUES (4, 12, 18, true, 'Turno RecontraExtra');
+
+
+
+-- INSERT INTO jornadas (id, nro_documento, id_concepto, fecha, horasTrabajadas)
+-- VALUES ('dos', 40276969, 20, '2023-02-02', 8);
+-- INSERT INTO jornadas (id, nro_documento, id_concepto, fecha, horasTrabajadas)
+-- VALUES ('tres"', 40276969, 30, '2023-03-03', 8);
+-- INSERT INTO jornadas (id, nro_documento, id_concepto, fecha, horasTrabajadas)
+-- VALUES ('cuatro', 40276969, 40, '2023-04-04', 8);

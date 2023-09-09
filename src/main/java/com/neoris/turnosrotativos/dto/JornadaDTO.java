@@ -2,45 +2,60 @@ package com.neoris.turnosrotativos.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.neoris.turnosrotativos.entities.Jornada;
 
 public class JornadaDTO {
-    private Long id;
+    private String id;
 
-    private Long idEmpleado;
+    private Long nroDocumento;
+
+    private String nombreCompleto;
 
     private Integer idConcepto;
 
     private LocalDate fecha;
-
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer horasTrabajadas;
 
     public JornadaDTO() {
 
     }
 
-    public JornadaDTO(Long id, Long idEmpleado, Integer idConcepto, LocalDate fecha, Integer horasTrabajadas) {
+    public JornadaDTO(String id, Long nroDocumento, String nombreCompleto, Integer idConcepto, LocalDate fecha,
+            Integer horasTrabajadas) {
         this.id = id;
-        this.idEmpleado = idEmpleado;
+        this.nroDocumento = nroDocumento;
+        this.nombreCompleto = nombreCompleto;
         this.idConcepto = idConcepto;
         this.fecha = fecha;
         this.horasTrabajadas = horasTrabajadas;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getIdEmpleado() {
-        return idEmpleado;
+    public Long getnroDocumento() {
+        return nroDocumento;
     }
 
-    public void setIdEmpleado(Long idEmpleado) {
-        this.idEmpleado = idEmpleado;
+    public void setnroDocumento(Long nroDocumento) {
+        this.nroDocumento = nroDocumento;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
 
     public Integer getIdConcepto() {
@@ -74,7 +89,7 @@ public class JornadaDTO {
         Jornada entity = new Jornada();
 
         entity.setId(this.id);
-        entity.setIdEmpleado(this.idEmpleado);
+        entity.setnroDocumento(this.nroDocumento);
         entity.setIdConcepto(this.idConcepto);
         entity.setFecha(this.fecha);
         entity.setHorasTrabajadas(this.horasTrabajadas);

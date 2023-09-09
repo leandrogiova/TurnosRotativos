@@ -20,11 +20,13 @@ public class Jornada {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private String id;
 
+    @Column(name = "nro_documento")
     @NotNull(message = "")
     @NotBlank(message = "")
-    private Long idEmpleado;
+    private Long nroDocumento;
+    @Column(name = "id_concepto")
     @NotNull(message = "")
     @NotBlank(message = "")
     private Integer idConcepto;
@@ -38,28 +40,28 @@ public class Jornada {
 
     }
 
-    public Jornada(Long id, Long idEmpleado, Integer idConcepto, LocalDate fecha, Integer horasTrabajadas) {
+    public Jornada(String id, Long nroDocumento, Integer idConcepto, LocalDate fecha, Integer horasTrabajadas) {
         this.id = id;
-        this.idEmpleado = idEmpleado;
+        this.nroDocumento = nroDocumento;
         this.idConcepto = idConcepto;
         this.fecha = fecha;
         this.horasTrabajadas = horasTrabajadas;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getIdEmpleado() {
-        return idEmpleado;
+    public Long getnroDocumento() {
+        return nroDocumento;
     }
 
-    public void setIdEmpleado(Long idEmpleado) {
-        this.idEmpleado = idEmpleado;
+    public void setnroDocumento(Long nroDocumento) {
+        this.nroDocumento = nroDocumento;
     }
 
     public Integer getIdConcepto() {
@@ -95,7 +97,7 @@ public class Jornada {
         JornadaDTO jornadaDTO = new JornadaDTO();
 
         jornadaDTO.setId(this.id);
-        jornadaDTO.setIdEmpleado(this.idEmpleado);
+        jornadaDTO.setnroDocumento(this.nroDocumento);
         jornadaDTO.setIdConcepto(this.idConcepto);
         jornadaDTO.setFecha(this.fecha);
         jornadaDTO.setHorasTrabajadas(this.horasTrabajadas);
@@ -112,7 +114,7 @@ public class Jornada {
         JornadaDTO jornadaDTO = new JornadaDTO();
 
         jornadaDTO.setId(jornada.getId());
-        jornadaDTO.setIdEmpleado(jornada.getIdEmpleado());
+        jornadaDTO.setnroDocumento(jornada.getnroDocumento());
         jornadaDTO.setIdConcepto(jornada.getIdConcepto());
         jornadaDTO.setFecha(jornada.getFecha());
         jornadaDTO.setHorasTrabajadas(jornada.getHorasTrabajadas());

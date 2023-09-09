@@ -16,7 +16,6 @@ public class Empleado {
     private Long id;
 
     @Column(name = "nro_documento")
-
     private Long nroDocumento;
     @Column(name = "nombre")
     private String nombre;
