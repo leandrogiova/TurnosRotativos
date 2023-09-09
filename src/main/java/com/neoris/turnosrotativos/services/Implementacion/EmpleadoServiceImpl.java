@@ -5,8 +5,6 @@ import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -175,6 +173,18 @@ public class EmpleadoServiceImpl {
         empleadoExistente = empleadoRepository.save(empleadoExistente);
 
         return empleadoExistente.toEmpleadoDTO();
+    }
+
+    /*
+     * 
+     */
+    public void eliminarEmpleado(Long id) {
+        Optional<Empleado> empleado = empleadoRepository.findById(id);
+        if (empleado.isPresent()) {
+            empleadoRepository.delete(empleado.get());
+        } else {
+            throw new BussinessException("No se encontró el empleado con Id: " + id, HttpStatus.NOT_FOUND);
+        }
     }
 
     /*

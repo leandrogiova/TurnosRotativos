@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +28,9 @@ public class EmpleadoController {
     @Autowired
     private EmpleadoServiceImpl empleadoService;
 
+    /*
+     * 
+     */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<EmpleadoDTO> agregarEmpleado(@Valid @RequestBody EmpleadoDTO empleadoDTO) {
 
@@ -33,11 +38,17 @@ public class EmpleadoController {
                 HttpStatus.CREATED);
     }
 
+    /*
+     * 
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Empleado>> obtenerTodosLosEmpleados() {
         return new ResponseEntity<>(this.empleadoService.obtenerTodosLosEmpleados(), HttpStatus.OK);
     }
 
+    /*
+     * 
+     */
     @GetMapping("/{empleadoId}")
     public ResponseEntity<EmpleadoDTO> obtenerEmpleado(@PathVariable("empleadoId") String stringId) {
         Long id_;
@@ -73,6 +84,22 @@ public class EmpleadoController {
 
         return ResponseEntity.ok(this.empleadoService.actualizarEmpleado(id_, empleadoDTO));
 
+    }
+
+    /*
+     * 
+     */
+    @DeleteMapping("/{empleadoId}")
+    public ResponseEntity<HttpStatus> eliminarEmpleado(@PathVariable("empleadoId") String stringId) {
+        Long id_;
+
+        try {
+            id_ = Long.parseLong(stringId);
+        } catch (NumberFormatException e) {
+            throw new BussinessException("El id del empleado en la URI contiene caracteres.", HttpStatus.CONFLICT);
+        }
+        this.empleadoService.eliminarEmpleado(id_);
+        return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
     }
 
 }
