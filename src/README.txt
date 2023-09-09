@@ -16,3 +16,6 @@ json
   "fechaNacimiento": "1998-08-06",
   "fechaIngreso": "2019-06-04"
 }
+
+
+Conclusión: usar "nroDocumento" para evitar errores.
