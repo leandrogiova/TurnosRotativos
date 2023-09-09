@@ -7,8 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.neoris.turnosrotativos.entities.Empleado;
-
 @SpringBootApplication
 public class TurnosrotativosApplication {
 
