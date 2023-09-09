@@ -92,6 +92,9 @@ public class EmpleadoDTO {
         this.fechaCreacion = fechaCreacion;
     }
 
+    /*
+     * 
+     */
     public Empleado toEntity() {
         Empleado entity = new Empleado();
 

@@ -4,12 +4,14 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.neoris.turnosrotativos.dto.EmpleadoDTO;
+import com.neoris.turnosrotativos.entities.Concepto;
 import com.neoris.turnosrotativos.entities.Empleado;
 import com.neoris.turnosrotativos.exceptions.BussinessException;
 import com.neoris.turnosrotativos.repositorys.EmpleadoRepository;
@@ -78,8 +80,11 @@ public class EmpleadoServiceImpl implements EmpleadoService {
      * Funcion obtenerTodosLosEmpleados
      * Retorna una lista con todos los empleados en la base de datos
      */
-    public List<Empleado> obtenerTodosLosEmpleados() {
-        return empleadoRepository.findAll();
+    public List<EmpleadoDTO> obtenerTodosLosEmpleados() {
+        return empleadoRepository.findAll()
+                .stream()
+                .map(Empleado::toEmpleadoDTO_Static)
+                .collect(Collectors.toList());
     }
 
     /*

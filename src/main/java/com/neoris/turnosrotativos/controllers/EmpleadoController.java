@@ -42,7 +42,7 @@ public class EmpleadoController {
      * 
      */
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Empleado>> obtenerTodosLosEmpleados() {
+    public ResponseEntity<List<EmpleadoDTO>> obtenerTodosLosEmpleados() {
         return new ResponseEntity<>(this.empleadoService.obtenerTodosLosEmpleados(), HttpStatus.OK);
     }
 

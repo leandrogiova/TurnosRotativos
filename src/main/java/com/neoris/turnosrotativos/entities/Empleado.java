@@ -122,6 +122,26 @@ public class Empleado {
     }
 
     /*
+     * funcion EmpleadoDTO_Static
+     * Transforma una clase Empleado a una clase empleadoDTO
+     * Se utilizar para retornar todos los empleados hacia afuera
+     */
+    public static EmpleadoDTO toEmpleadoDTO_Static(Empleado empleado) {
+        EmpleadoDTO empleadoDTO = new EmpleadoDTO();
+
+        empleadoDTO.setId(empleado.getId());
+        empleadoDTO.setNroDocumento(empleado.getNroDocumento());
+        empleadoDTO.setNombre(empleado.getNombre());
+        empleadoDTO.setApellido(empleado.getApellido());
+        empleadoDTO.setEmail(empleado.getEmail());
+        empleadoDTO.setFechaNacimiento(empleado.getFechaNacimiento());
+        empleadoDTO.setFechaIngreso(empleado.getFechaIngreso());
+        empleadoDTO.setFechaCreacion(empleado.getFechaCreacion());
+
+        return empleadoDTO;
+    }
+
+    /*
      * funcion EmpleadoDTO
      * Transforma una clase Empleado a una clase empleadoDTO
      * Para su cominucacion al exterior
