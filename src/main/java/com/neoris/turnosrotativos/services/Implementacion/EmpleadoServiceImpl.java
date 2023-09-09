@@ -5,7 +5,10 @@ import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.neoris.turnosrotativos.dto.EmpleadoDTO;
@@ -36,31 +39,33 @@ public class EmpleadoServiceImpl {
      */
     public EmpleadoDTO agregarEmpleado(Empleado empleado) {
         if (validarDNI(empleado)) {
-            throw new BussinessException("Ya existe un empleado con el documento ingresado.");
+            throw new BussinessException("Ya existe un empleado con el documento ingresado.", HttpStatus.CONFLICT);
         }
 
         if (validarEmail(empleado)) {
-            throw new BussinessException("Ya existe un empleado con ese mail ingresado.");
+            throw new BussinessException("Ya existe un empleado con ese mail ingresado.", HttpStatus.CONFLICT);
         }
 
         if (!mayorDeEdad(empleado)) {
-            throw new BussinessException("La edad del empleado no puede ser menor a 18 años");
+            throw new BussinessException("La edad del empleado no puede ser menor a 18 años", HttpStatus.BAD_REQUEST);
         }
 
         if (!validarFecha(empleado.getFechaNacimiento())) {
-            throw new BussinessException("La fecha de nacimiento no puede ser posterior al día de la fecha.");
+            throw new BussinessException("La fecha de nacimiento no puede ser posterior al día de la fecha.",
+                    HttpStatus.BAD_REQUEST);
         }
 
         if (!validarFecha(empleado.getFechaIngreso())) {
-            throw new BussinessException("La fecha de ingreso no puede ser posterior al día de la fecha.");
+            throw new BussinessException("La fecha de ingreso no puede ser posterior al día de la fecha.",
+                    HttpStatus.BAD_REQUEST);
         }
 
         if (!validarNombreApellido(empleado.getNombre())) {
-            throw new BussinessException("Solo se permiten letras en el campo 'nombre'");
+            throw new BussinessException("Solo se permiten letras en el campo 'nombre'", HttpStatus.BAD_REQUEST);
         }
 
         if (!validarNombreApellido(empleado.getApellido())) {
-            throw new BussinessException("Solo se permiten letras en el campo 'apellido'");
+            throw new BussinessException("Solo se permiten letras en el campo 'apellido'", HttpStatus.BAD_REQUEST);
         }
 
         empleado.setNombre(empleado.setearNombreApellido(empleado.getNombre()));
@@ -93,7 +98,7 @@ public class EmpleadoServiceImpl {
         if (empleado.isPresent()) {
             return empleado.get().toEmpleadoDTO();
         } else {
-            throw new BussinessException("No se encontró el empleado con Id: " + id);
+            throw new BussinessException("No se encontró el empleado con Id: " + id, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -120,37 +125,39 @@ public class EmpleadoServiceImpl {
 
         Empleado empleadoExistente = empleadoRepository.findById(empleadoId).orElse(null);
         if (empleadoExistente == null) {
-            throw new BussinessException("Empleado no encontrado con ID: " + empleadoId);
+            throw new BussinessException("Empleado no encontrado con ID: " + empleadoId, HttpStatus.NOT_FOUND);
         }
 
         // Verificar si otro empleado ya tiene el mismo nroDocumento o email (excluyendo
         // el empleado actual)
         if (empleadoRepository.existsByNroDocumentoAndIdNot(empleadoDTO.getNroDocumento(), empleadoId)) {
-            throw new BussinessException("Ese nroDocumento ya está en uso por otro empleado.");
+            throw new BussinessException("Ya existe un empleado con el documento ingresado", HttpStatus.CONFLICT);
         }
 
         if (empleadoRepository.existsByEmailAndIdNot(empleadoDTO.getEmail(), empleadoId)) {
-            throw new BussinessException("Ese email ya está en uso por otro empleado.");
+            throw new BussinessException("Ya existe un empleado con el email ingresado.", HttpStatus.CONFLICT);
         }
 
         if (!mayorDeEdad(empleadoDTO.toEntity())) {
-            throw new BussinessException("La edad del empleado no puede ser menor a 18 años");
+            throw new BussinessException("La edad del empleado no puede ser menor a 18 años", HttpStatus.BAD_REQUEST);
         }
 
         if (!validarFecha(empleadoDTO.toEntity().getFechaNacimiento())) {
-            throw new BussinessException("La fecha de nacimiento no puede ser posterior al día de la fecha.");
+            throw new BussinessException("La fecha de nacimiento no puede ser posterior al día de la fecha.",
+                    HttpStatus.BAD_REQUEST);
         }
 
         if (!validarFecha(empleadoDTO.toEntity().getFechaIngreso())) {
-            throw new BussinessException("La fecha de ingreso no puede ser posterior al día de la fecha.");
+            throw new BussinessException("La fecha de ingreso no puede ser posterior al día de la fecha.",
+                    HttpStatus.BAD_REQUEST);
         }
 
         if (!validarNombreApellido(empleadoDTO.toEntity().getNombre())) {
-            throw new BussinessException("Solo se permiten letras en el campo 'nombre'");
+            throw new BussinessException("Solo se permiten letras en el campo 'nombre'", HttpStatus.BAD_REQUEST);
         }
 
         if (!validarNombreApellido(empleadoDTO.toEntity().getApellido())) {
-            throw new BussinessException("Solo se permiten letras en el campo 'apellido'");
+            throw new BussinessException("Solo se permiten letras en el campo 'apellido'", HttpStatus.BAD_REQUEST);
         }
 
         empleadoExistente.setNroDocumento(empleadoDTO.getNroDocumento());

@@ -44,7 +44,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         responseBody.put("timestamp", new Date());
         responseBody.put("message", ex.getMessage());
 
-        return new ResponseEntity<>(responseBody, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(responseBody, ex.getHttpStatus());
     }
 
 }

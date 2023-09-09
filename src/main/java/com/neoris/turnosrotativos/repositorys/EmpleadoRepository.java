@@ -10,11 +10,11 @@ import com.neoris.turnosrotativos.entities.Empleado;
 @Repository
 public interface EmpleadoRepository extends JpaRepository<Empleado, Long> {
 
-    Optional<Empleado> findByNroDocumento(Integer nroDocumento);
+    Optional<Empleado> findByNroDocumento(Long nroDocumento);
 
     Optional<Empleado> findByEmail(String email);
 
-    boolean existsByNroDocumentoAndIdNot(Integer nroDocumento, Long empleadoId);
+    boolean existsByNroDocumentoAndIdNot(Long nroDocumento, Long empleadoId);
 
     boolean existsByEmailAndIdNot(String email, Long empleadoId);
 }

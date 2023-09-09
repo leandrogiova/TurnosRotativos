@@ -45,7 +45,7 @@ public class EmpleadoController {
         try {
             id_ = Long.parseLong(stringId);
         } catch (NumberFormatException e) {
-            throw new BussinessException("El id del empleado en la URI contiene caracteres.");
+            throw new BussinessException("El id del empleado en la URI contiene caracteres.", HttpStatus.CONFLICT);
         }
         return ResponseEntity.ok(this.empleadoService.obtenerEmpleado(id_));
     }
@@ -68,7 +68,7 @@ public class EmpleadoController {
         try {
             id_ = Long.parseLong(stringId);
         } catch (NumberFormatException e) {
-            throw new BussinessException("El id del empleado en la URI contiene caracteres.");
+            throw new BussinessException("El id del empleado en la URI contiene caracteres.", HttpStatus.CONFLICT);
         }
 
         return ResponseEntity.ok(this.empleadoService.actualizarEmpleado(id_, empleadoDTO));

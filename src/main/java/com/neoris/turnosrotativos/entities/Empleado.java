@@ -17,7 +17,7 @@ public class Empleado {
 
     @Column(name = "nro_documento")
 
-    private Integer nroDocumento;
+    private Long nroDocumento;
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "apellido")
@@ -41,11 +41,11 @@ public class Empleado {
         this.id = id;
     }
 
-    public Integer getNroDocumento() {
+    public Long getNroDocumento() {
         return nroDocumento;
     }
 
-    public void setNroDocumento(Integer nroDocumento) {
+    public void setNroDocumento(Long nroDocumento) {
         this.nroDocumento = nroDocumento;
     }
 
@@ -97,7 +97,7 @@ public class Empleado {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Empleado(Long id, Integer nroDocumento, String nombre, String apellido, String email,
+    public Empleado(Long id, Long nroDocumento, String nombre, String apellido, String email,
             LocalDate fechaNacimiento,
             LocalDate fechaIngreso, LocalDate fechaCreacion) {
         this.id = id;

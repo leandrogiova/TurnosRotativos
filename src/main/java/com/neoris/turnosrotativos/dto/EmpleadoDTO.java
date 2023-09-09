@@ -12,7 +12,7 @@ public class EmpleadoDTO {
 
     private Long id;
     @NotNull(message = "El campo nroDocumento es obligatorio")
-    private Integer nroDocumento;
+    private Long nroDocumento;
     @NotNull(message = "El campo nombre es obligatorio")
     @NotBlank(message = "El campo nombre no puede estar vacio")
     private String nombre;
@@ -36,11 +36,11 @@ public class EmpleadoDTO {
         this.id = id;
     }
 
-    public Integer getNroDocumento() {
+    public Long getNroDocumento() {
         return nroDocumento;
     }
 
-    public void setNroDocumento(Integer nroDocumento) {
+    public void setNroDocumento(Long nroDocumento) {
         this.nroDocumento = nroDocumento;
     }
 

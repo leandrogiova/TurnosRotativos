@@ -20,8 +20,6 @@ public class TurnosrotativosApplication {
 		logger.info("============    APP RUNNING    ============");
 		logger.info("===========================================");
 
-		Empleado empleado1 = new Empleado();
-		empleado1.setearfechaDeCreacion();
 	}
 
 	@Bean
