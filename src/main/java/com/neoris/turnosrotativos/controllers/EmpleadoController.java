@@ -50,6 +50,15 @@ public class EmpleadoController {
         return ResponseEntity.ok(this.empleadoService.obtenerEmpleado(id_));
     }
 
+    /*
+     * Funcion actualiarEmpleado
+     * Va a actualizar un empleado con sus respectivos cambios
+     * Recibe un String y se valida que se le pase unicamente un Long, en otro caso
+     * lanza una excepción
+     * Llama al Service y le pasa el id y el empleado a actualiazar
+     * Recibe un String con el id y un EmpleadoDTO
+     * Retorna un ResponseEntity de EmpleadoDTO con un estado OK 200
+     */
     @PutMapping("/{empleadoId}")
     public ResponseEntity<EmpleadoDTO> actualizarEmpleado(@PathVariable("empleadoId") String stringId,
             @Valid @RequestBody EmpleadoDTO empleadoDTO) {
