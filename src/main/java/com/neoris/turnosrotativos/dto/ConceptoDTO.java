@@ -1,28 +1,22 @@
-package com.neoris.turnosrotativos.entities;
+package com.neoris.turnosrotativos.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.neoris.turnosrotativos.entities.Concepto;
 
-import com.neoris.turnosrotativos.dto.ConceptoDTO;
-
-@Entity(name = "conceptos")
-public class Concepto {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class ConceptoDTO {
     private Integer id;
     private String nombre;
     private Boolean laborable;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer hsMinimo;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer hsMaximo;
 
-    public Concepto() {
+    public ConceptoDTO() {
 
     }
 
-    public Concepto(Integer id, String nombre, Boolean laborable, Integer hsMinimo, Integer hsMaximo) {
+    public ConceptoDTO(Integer id, String nombre, Boolean laborable, Integer hsMinimo, Integer hsMaximo) {
         this.id = id;
         this.nombre = nombre;
         this.laborable = laborable;
@@ -70,15 +64,15 @@ public class Concepto {
         this.hsMaximo = hsMaximo;
     }
 
-    public static ConceptoDTO toConceptoDTO(Concepto conceptoEntity) {
-        ConceptoDTO conceptoDTO = new ConceptoDTO();
-        conceptoDTO.setId(conceptoEntity.getId());
-        conceptoDTO.setNombre(conceptoEntity.getNombre());
-        conceptoDTO.setHsMaximo(conceptoEntity.getHsMaximo());
-        conceptoDTO.setHsMinimo(conceptoEntity.getHsMinimo());
-        conceptoDTO.setLaborable(conceptoEntity.getLaborable());
+    public Concepto toEntity() {
+        Concepto concepto = new Concepto();
+        concepto.setId(this.id);
+        concepto.setNombre(this.nombre);
+        concepto.setHsMaximo(this.hsMaximo);
+        concepto.setHsMinimo(this.hsMinimo);
+        concepto.setLaborable(this.laborable);
 
-        return conceptoDTO;
+        return concepto;
     }
 
 }

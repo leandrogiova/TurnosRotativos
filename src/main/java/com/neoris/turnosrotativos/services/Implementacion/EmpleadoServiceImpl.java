@@ -13,11 +13,10 @@ import com.neoris.turnosrotativos.dto.EmpleadoDTO;
 import com.neoris.turnosrotativos.entities.Empleado;
 import com.neoris.turnosrotativos.exceptions.BussinessException;
 import com.neoris.turnosrotativos.repositorys.EmpleadoRepository;
+import com.neoris.turnosrotativos.services.EmpleadoService;
 
 @Service
-public class EmpleadoServiceImpl {
-
-    // TODO agregar borrar empleado
+public class EmpleadoServiceImpl implements EmpleadoService {
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
