@@ -13,4 +13,8 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Long> {
     Optional<Empleado> findByNroDocumento(Integer nroDocumento);
 
     Optional<Empleado> findByEmail(String email);
+
+    boolean existsByNroDocumentoAndIdNot(Integer nroDocumento, Long empleadoId);
+
+    boolean existsByEmailAndIdNot(String email, Long empleadoId);
 }

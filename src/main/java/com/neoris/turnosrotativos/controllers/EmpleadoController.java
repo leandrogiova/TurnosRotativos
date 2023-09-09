@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.neoris.turnosrotativos.dto.EmpleadoDTO;
 import com.neoris.turnosrotativos.entities.Empleado;
+import com.neoris.turnosrotativos.exceptions.BussinessException;
 import com.neoris.turnosrotativos.services.Implementacion.EmpleadoServiceImpl;
 
 @RestController
@@ -37,8 +39,31 @@ public class EmpleadoController {
     }
 
     @GetMapping("/{empleadoId}")
-    public ResponseEntity<EmpleadoDTO> obtenerEmpleado(@PathVariable("empleadoId") Long id) {
-        return ResponseEntity.ok(this.empleadoService.obtenerEmpleado(id));
+    public ResponseEntity<EmpleadoDTO> obtenerEmpleado(@PathVariable("empleadoId") String stringId) {
+        Long id_;
+
+        try {
+            id_ = Long.parseLong(stringId);
+        } catch (NumberFormatException e) {
+            throw new BussinessException("El id del empleado en la URI contiene caracteres.");
+        }
+        return ResponseEntity.ok(this.empleadoService.obtenerEmpleado(id_));
+    }
+
+    @PutMapping("/{empleadoId}")
+    public ResponseEntity<EmpleadoDTO> actualizarEmpleado(@PathVariable("empleadoId") String stringId,
+            @Valid @RequestBody EmpleadoDTO empleadoDTO) {
+
+        Long id_;
+
+        try {
+            id_ = Long.parseLong(stringId);
+        } catch (NumberFormatException e) {
+            throw new BussinessException("El id del empleado en la URI contiene caracteres.");
+        }
+
+        return ResponseEntity.ok(this.empleadoService.actualizarEmpleado(id_, empleadoDTO));
+
     }
 
 }

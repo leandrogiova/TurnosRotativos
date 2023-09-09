@@ -5,6 +5,8 @@ import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,18 +50,15 @@ public class EmpleadoServiceImpl {
             throw new BussinessException("Solo se permiten letras en el campo 'apellido'");
         }
 
-        // Realiza los cambios necesarios en nombre y apellido antes de guardar
         empleado.setNombre(empleado.setearNombreApellido(empleado.getNombre()));
         empleado.setApellido(empleado.setearNombreApellido(empleado.getApellido()));
 
-        // Realiza el proceso de creación del empleado
         empleado.setearfechaDeCreacion();
         empleadoRepository.save(empleado);
 
         return empleado.toEmpleadoDTO();
     }
 
-    // TODO agregar validar el nombre y el apellido
     // TODO ver y revisar el get a todos los empleados y revisar el get a un
     // empledao
     // TODO agregar put, actualizar empleado
@@ -74,8 +73,187 @@ public class EmpleadoServiceImpl {
         if (empleado.isPresent()) {
             return empleado.get().toEmpleadoDTO();
         } else {
-            return null;
+            throw new BussinessException("No se encontró el empleado con Id: " + id);
         }
+    }
+
+    /*
+     * funcion actualizarEmpleado
+     * Recibe un id de un empleado y un empleado
+     * Retorna un empleadoDTO
+     */
+    public EmpleadoDTO actualizarEmpleado2(Long id, EmpleadoDTO empleadoDTO) {
+
+        Optional<Empleado> empleadoFind = empleadoRepository.findById(id);
+        System.out.println("\n\n\n\n\nfechdeDeCreacion: " + empleadoDTO.getFechaCreacion());
+        if (empleadoFind.isPresent()) {
+            empleadoDTO.setId(empleadoFind.get().getId());
+
+            Empleado empleado_ = empleadoDTO.toEntity();
+
+            // valido todas las excepciones
+            if (validarDNI(empleado_)) {
+                throw new BussinessException("Ya existe un empleado con el documento ingresado.");
+            }
+            if (validarEmail(empleado_)) {
+                throw new BussinessException("Ya existe un empleado con ese mail ingresado.");
+            }
+
+            if (!mayorDeEdad(empleado_)) {
+                throw new BussinessException("La edad del empleado no puede ser menor a 18 años");
+            }
+
+            if (!validarFecha(empleado_.getFechaNacimiento())) {
+                throw new BussinessException("La fecha de nacimiento no puede ser posterior al día de la fecha.");
+            }
+
+            if (!validarFecha(empleado_.getFechaIngreso())) {
+                throw new BussinessException("La fecha de ingreso no puede ser posterior al día de la fecha.");
+            }
+
+            if (!validarNombreApellido(empleado_.getNombre())) {
+                throw new BussinessException("Solo se permiten letras en el campo 'nombre'");
+            }
+
+            if (!validarNombreApellido(empleado_.getApellido())) {
+                throw new BussinessException("Solo se permiten letras en el campo 'apellido'");
+            }
+
+            empleado_.setNombre(empleado_.setearNombreApellido(empleado_.getNombre()));
+            empleado_.setApellido(empleado_.setearNombreApellido(empleado_.getApellido()));
+            empleado_.setFechaCreacion(empleadoDTO.getFechaCreacion());
+            empleado_ = empleadoRepository.save(empleado_);
+            return empleado_.toEmpleadoDTO();
+
+        } else {
+            throw new BussinessException("El id que quiere modificar no existe");
+        }
+    }
+
+    public EmpleadoDTO actualizarEmpleado3(Long empleadoId, EmpleadoDTO empleadoDTO) {
+
+        Empleado empleado_ = empleadoDTO.toEntity();
+
+        Empleado empleadoExistente = empleadoRepository.findById(empleadoId)
+                .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado con ID: " + empleadoId));
+
+        // Verificar si otro empleado ya tiene el mismo nroDocumento o email (excluyendo
+        // el empleado actual)
+        if (empleadoRepository.existsByNroDocumentoAndIdNot(empleadoDTO.getNroDocumento(), empleadoId)) {
+            throw new BussinessException("Ese nroDocumento ya está en uso por otro empleado.");
+        }
+
+        if (empleadoRepository.existsByEmailAndIdNot(empleadoDTO.getEmail(), empleadoId)) {
+            throw new BussinessException("Ese email ya está en uso por otro empleado.");
+        }
+
+        empleado_.setId(empleadoDTO.getId());
+        empleado_.setNombre(empleado_.setearNombreApellido(empleado_.getNombre()));
+        empleado_.setApellido(empleado_.setearNombreApellido(empleado_.getApellido()));
+        empleado_.setFechaCreacion(empleadoDTO.getFechaCreacion());
+        empleado_ = empleadoRepository.save(empleado_);
+        return empleado_.toEmpleadoDTO();
+    }
+
+    /*
+     * funcion actualizarEmpleado
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * Recibe un id de un empleado y el empleado
+     */
+    public EmpleadoDTO actualizarEmpleado(Long empleadoId, EmpleadoDTO empleadoDTO) {
+        // Obtener el empleado existente por ID
+
+        // TODO VER EL TEMA CUANDO SE INGRESA UN ID NO REGISTRADO
+        // Empleado empleadoExistente = empleadoRepository.findById(empleadoId)
+        // .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado con
+        // ID: " + empleadoId));
+
+        Empleado empleadoExistente = empleadoRepository.findById(empleadoId).orElse(null);
+        if (empleadoExistente == null) {
+            throw new BussinessException("Empleado no encontrado con ID: " + empleadoId);
+        }
+
+        // Verificar si otro empleado ya tiene el mismo nroDocumento o email (excluyendo
+        // el empleado actual)
+        if (empleadoRepository.existsByNroDocumentoAndIdNot(empleadoDTO.getNroDocumento(), empleadoId)) {
+            throw new BussinessException("Ese nroDocumento ya está en uso por otro empleado.");
+        }
+
+        if (empleadoRepository.existsByEmailAndIdNot(empleadoDTO.getEmail(), empleadoId)) {
+            throw new BussinessException("Ese email ya está en uso por otro empleado.");
+        }
+
+        if (!mayorDeEdad(empleadoDTO.toEntity())) {
+            throw new BussinessException("La edad del empleado no puede ser menor a 18 años");
+        }
+
+        if (!validarFecha(empleadoDTO.toEntity().getFechaNacimiento())) {
+            throw new BussinessException("La fecha de nacimiento no puede ser posterior al día de la fecha.");
+        }
+
+        if (!validarFecha(empleadoDTO.toEntity().getFechaIngreso())) {
+            throw new BussinessException("La fecha de ingreso no puede ser posterior al día de la fecha.");
+        }
+
+        if (!validarNombreApellido(empleadoDTO.toEntity().getNombre())) {
+            throw new BussinessException("Solo se permiten letras en el campo 'nombre'");
+        }
+
+        if (!validarNombreApellido(empleadoDTO.toEntity().getApellido())) {
+            throw new BussinessException("Solo se permiten letras en el campo 'apellido'");
+        }
+
+        // Actualizar los campos permitidos del empleado existente con los valores de
+        // DTO
+        empleadoExistente.setNroDocumento(empleadoDTO.getNroDocumento());
+
+        // setea el String nombre con el String que retorna "setearNombreApellido"
+        // "setearNombreApellido" toma un String y retorna ese String conel primer
+        // caracte mayucula y el resto minuscula
+        empleadoExistente.setApellido(empleadoExistente.setearNombreApellido(empleadoDTO.getApellido()));
+        empleadoExistente.setNombre(empleadoExistente.setearNombreApellido(empleadoDTO.getNombre()));
+
+        // empleadoExistente.setNombre(empleadoDTO.getNombre());
+        // empleadoExistente.setApellido(empleadoDTO.getApellido());
+        empleadoExistente.setEmail(empleadoDTO.getEmail());
+        empleadoExistente.setFechaNacimiento(empleadoDTO.getFechaNacimiento());
+        empleadoExistente.setFechaIngreso(empleadoDTO.getFechaIngreso());
+
+        // Guardar los cambios en la base de datos
+        empleadoExistente = empleadoRepository.save(empleadoExistente);
+
+        return empleadoExistente.toEmpleadoDTO();
     }
 
     /*
@@ -150,7 +328,7 @@ public class EmpleadoServiceImpl {
 
         stringNombreApellido = primerCaracter + restoCadena;
 
-        // Verificamos si la cadena resultante contiene solo letras
+        // Verifica que el string contenga solamente letras
         for (char c : stringNombreApellido.toCharArray()) {
             if (!Character.isLetter(c)) {
                 System.out.println(stringNombreApellido + " no es válido.");
@@ -158,9 +336,6 @@ public class EmpleadoServiceImpl {
             }
         }
 
-        // Si hemos llegado hasta aquí, la cadena es válida y ha sido formateada
-        // correctamente
-        System.out.println(stringNombreApellido + " es válido.");
         return true;
     }
 
