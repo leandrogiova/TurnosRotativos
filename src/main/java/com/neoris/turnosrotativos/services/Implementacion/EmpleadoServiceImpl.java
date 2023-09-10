@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.neoris.turnosrotativos.dto.EmpleadoDTO;
-import com.neoris.turnosrotativos.entities.Concepto;
 import com.neoris.turnosrotativos.entities.Empleado;
 import com.neoris.turnosrotativos.exceptions.BussinessException;
 import com.neoris.turnosrotativos.repositorys.EmpleadoRepository;

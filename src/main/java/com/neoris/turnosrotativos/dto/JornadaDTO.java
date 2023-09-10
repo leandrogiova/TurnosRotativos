@@ -2,8 +2,6 @@ package com.neoris.turnosrotativos.dto;
 
 import java.time.LocalDate;
 
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.neoris.turnosrotativos.entities.Jornada;
 
@@ -17,6 +15,7 @@ public class JornadaDTO {
     private Integer idConcepto;
 
     private LocalDate fecha;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer horasTrabajadas;
 
@@ -89,7 +88,7 @@ public class JornadaDTO {
         Jornada entity = new Jornada();
 
         entity.setId(this.id);
-        entity.setnroDocumento(this.nroDocumento);
+        entity.setNroDocumento(this.nroDocumento);
         entity.setIdConcepto(this.idConcepto);
         entity.setFecha(this.fecha);
         entity.setHorasTrabajadas(this.horasTrabajadas);

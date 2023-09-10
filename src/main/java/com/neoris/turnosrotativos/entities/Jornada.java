@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.neoris.turnosrotativos.dto.EmpleadoDTO;
 import com.neoris.turnosrotativos.dto.JornadaDTO;
 
 @Entity
@@ -26,6 +25,10 @@ public class Jornada {
     @NotNull(message = "")
     @NotBlank(message = "")
     private Long nroDocumento;
+
+    @Column(name = "nombre_completo")
+    private String nombreCompleto;
+
     @Column(name = "id_concepto")
     @NotNull(message = "")
     @NotBlank(message = "")
@@ -40,9 +43,11 @@ public class Jornada {
 
     }
 
-    public Jornada(String id, Long nroDocumento, Integer idConcepto, LocalDate fecha, Integer horasTrabajadas) {
+    public Jornada(String id, Long nroDocumento, Integer idConcepto, String nombreCompleto, LocalDate fecha,
+            Integer horasTrabajadas) {
         this.id = id;
         this.nroDocumento = nroDocumento;
+        this.nombreCompleto = nombreCompleto;
         this.idConcepto = idConcepto;
         this.fecha = fecha;
         this.horasTrabajadas = horasTrabajadas;
@@ -56,12 +61,20 @@ public class Jornada {
         this.id = id;
     }
 
-    public Long getnroDocumento() {
+    public Long getNroDocumento() {
         return nroDocumento;
     }
 
-    public void setnroDocumento(Long nroDocumento) {
+    public void setNroDocumento(Long nroDocumento) {
         this.nroDocumento = nroDocumento;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
 
     public Integer getIdConcepto() {
@@ -98,6 +111,7 @@ public class Jornada {
 
         jornadaDTO.setId(this.id);
         jornadaDTO.setnroDocumento(this.nroDocumento);
+        jornadaDTO.setNombreCompleto(this.nombreCompleto);
         jornadaDTO.setIdConcepto(this.idConcepto);
         jornadaDTO.setFecha(this.fecha);
         jornadaDTO.setHorasTrabajadas(this.horasTrabajadas);
@@ -114,8 +128,9 @@ public class Jornada {
         JornadaDTO jornadaDTO = new JornadaDTO();
 
         jornadaDTO.setId(jornada.getId());
-        jornadaDTO.setnroDocumento(jornada.getnroDocumento());
+        jornadaDTO.setnroDocumento(jornada.getNroDocumento());
         jornadaDTO.setIdConcepto(jornada.getIdConcepto());
+        jornadaDTO.setNombreCompleto(jornada.getNombreCompleto());
         jornadaDTO.setFecha(jornada.getFecha());
         jornadaDTO.setHorasTrabajadas(jornada.getHorasTrabajadas());
 
