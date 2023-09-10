@@ -19,25 +19,25 @@ public class Jornada {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private String id;
+    private Long id;
+
+    @Column(name = "id_empleado")
+
+    private Long idEmpleado;
 
     @Column(name = "nro_documento")
-    @NotNull(message = "")
-    @NotBlank(message = "")
+
     private Long nroDocumento;
 
     @Column(name = "nombre_completo")
     private String nombreCompleto;
 
     @Column(name = "id_concepto")
-    @NotNull(message = "")
-    @NotBlank(message = "")
+
     private Integer idConcepto;
 
     private String nombreConcepto;
 
-    @NotNull(message = "")
-    @NotBlank(message = "")
     private LocalDate fecha;
 
     private Integer horasTrabajadas;
@@ -46,7 +46,7 @@ public class Jornada {
 
     }
 
-    public Jornada(String id, Long nroDocumento, Integer idConcepto, String nombreCompleto, LocalDate fecha,
+    public Jornada(Long id, Long nroDocumento, Integer idConcepto, String nombreCompleto, LocalDate fecha,
             Integer horasTrabajadas) {
         this.id = id;
         this.nroDocumento = nroDocumento;
@@ -56,12 +56,20 @@ public class Jornada {
         this.horasTrabajadas = horasTrabajadas;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(Long idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public Long getNroDocumento() {
@@ -117,7 +125,7 @@ public class Jornada {
      * Transforma una clase Jornada a una clase JornadaDTO
      * Para su cominucacion al exterior
      */
-    public JornadaDTO toEmpleadoDTO() {
+    public JornadaDTO toJornadaDTO() {
         JornadaDTO jornadaDTO = new JornadaDTO();
 
         jornadaDTO.setnroDocumento(this.nroDocumento);
@@ -134,7 +142,7 @@ public class Jornada {
      * Transforma una clase Jornada a una clase jorandaDTO
      * Se utilizar para retornar todos las jornadas hacia afuera
      */
-    public static JornadaDTO toEmpleadoDTO_Static(Jornada jornada) {
+    public static JornadaDTO toJornadaDTO_Static(Jornada jornada) {
         JornadaDTO jornadaDTO = new JornadaDTO();
 
         jornadaDTO.setnroDocumento(jornada.getNroDocumento());
