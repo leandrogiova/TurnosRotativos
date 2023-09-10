@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.neoris.turnosrotativos.dto.EmpleadoDTO;
 import com.neoris.turnosrotativos.dto.JornadaDTO;
 import com.neoris.turnosrotativos.entities.Concepto;
 import com.neoris.turnosrotativos.entities.Empleado;
@@ -44,10 +43,6 @@ public class JornadaServiceImpl implements JornadaService {
         LocalDate[] fechasDeLaSemana = new LocalDate[2];
 
         Empleado empleado = validarIdEmpleado(jornada.getIdEmpleado());
-
-        // System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n jornada.getNumeroDocumento: "
-        // + jornada.getNroDocumento()
-        // + " fecha: " + jornada.getFecha() + " idConcepto: " + jornada.getId());
 
         Concepto concepto = validarConcepto(jornada.getIdConcepto(), jornada.getHorasTrabajadas());
 
@@ -142,6 +137,9 @@ public class JornadaServiceImpl implements JornadaService {
 
     }
 
+    /*
+     * 
+     */
     public void validarCantidadDeTurnosSemanales(Jornada jornada, LocalDate[] fechas) {
         Integer contadorTurnosExtra = 0;
         Integer contadorTurnosNormales = 0;
@@ -171,30 +169,6 @@ public class JornadaServiceImpl implements JornadaService {
         }
 
     }
-
-    /*
-     * 
-     * 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-     
-     */
 
     /*
      * Funcion validarCantidadDeHorasPorDiaDeUnEmpleado
