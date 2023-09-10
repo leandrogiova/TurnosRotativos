@@ -72,8 +72,7 @@ public class JornadaServiceImpl implements JornadaService {
         fechasDeLaSemana = calcularInicioYFinSemana(jornada.getFecha());
 
         validarCantidadDeHorasSemanales(jornada, fechasDeLaSemana);
-        
-
+        validarCantidadDeTurnosSemanales(jornada, fechasDeLaSemana);
 
         jornadaRepository.save(jornada);
 
@@ -119,19 +118,58 @@ public class JornadaServiceImpl implements JornadaService {
      * final de semana
      */
     public void validarCantidadDeHorasSemanales(Jornada jornada, LocalDate[] fechas) {
-        Integer contadorDeHoras = 0;
+
+        if (jornada.getIdConcepto() != 3) {
+            Integer contadorDeHoras = jornada.getHorasTrabajadas();
+
+            List<Jornada> joranadas = jornadaRepository.findByNroDocumentoAndFechaBetween(jornada.getNroDocumento(),
+                    fechas[0], fechas[1]);
+
+            for (Jornada j : joranadas) {
+
+                if (j.getIdConcepto() != 3) {
+                    contadorDeHoras += j.getHorasTrabajadas();
+                    System.out.println("\n-------Bcle--contadorDeHoras: " + contadorDeHoras);
+                }
+
+            }
+            System.out.println("contadorDeHoras: " + contadorDeHoras + "\n\n\n\n\n");
+            if (contadorDeHoras > 48) {
+                throw new BussinessException("El empleado ingresado supera las 48 horas semanales.",
+                        HttpStatus.BAD_REQUEST);
+            }
+        }
+
+    }
+
+    public void validarCantidadDeTurnosSemanales(Jornada jornada, LocalDate[] fechas) {
+        Integer contadorTurnosExtra = 0;
+        Integer contadorTurnosNormales = 0;
+        Integer contadorTurnosDiasLibres = 0;
 
         List<Jornada> joranadas = jornadaRepository.findByNroDocumentoAndFechaBetween(jornada.getNroDocumento(),
                 fechas[0], fechas[1]);
 
         for (Jornada j : joranadas) {
-            contadorDeHoras += j.getHorasTrabajadas();
+            if (j.getIdConcepto() == 1)
+                contadorTurnosNormales++;
+            else if (j.getIdConcepto() == 2)
+                contadorTurnosExtra++;
+            else if (j.getIdConcepto() == 3)
+                contadorTurnosDiasLibres++;
         }
-        System.out.println("\n\n\n\n\n\n\n\n\ncontadorDeHoras: " + contadorDeHoras);
-        if (contadorDeHoras > 48) {
-            throw new BussinessException("El empleado ingresado supera las 48 horas semanales.",
+
+        if (jornada.getIdConcepto() == 1 && contadorTurnosNormales == 5) {
+            throw new BussinessException("El empleado ingresado ya cuenta con 5 turnos normales esta semana.",
+                    HttpStatus.BAD_REQUEST);
+        } else if (jornada.getIdConcepto() == 2 && contadorTurnosExtra == 3) {
+            throw new BussinessException("El empleado ingresado ya cuenta con 3 turnos extra esta semana.",
+                    HttpStatus.BAD_REQUEST);
+        } else if (jornada.getIdConcepto() == 3 && contadorTurnosDiasLibres == 2) {
+            throw new BussinessException("El empleado no cuenta con más dias libres esta semana.",
                     HttpStatus.BAD_REQUEST);
         }
+
     }
 
     /*
