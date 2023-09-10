@@ -29,8 +29,8 @@ public class JornadaServiceImpl implements JornadaService {
     private ConceptoRepository conceptoRepository;
 
     /*
-     * Funcion obtenerTodosLosConceptos
-     * Retorna una lista con todos los conceptos en la base de datos
+     * Funcion obtenerTodosLasJornadas
+     * Retorna una lista con todos las jornadas en la base de datos
      */
     public List<JornadaDTO> obtenerTodosLasJornadas() {
         return jornadaRepository.findAll()
@@ -45,6 +45,13 @@ public class JornadaServiceImpl implements JornadaService {
 
     }
 
+    /*
+     * Funcion obtenerJornadasPorDocumentoYFecha
+     * Recibe como parametro un numero de documento de un empleado y una fecha
+     * Setea el nombre completo del empleado y el nombre del concepto
+     * Recibe como parametro un Long nroDocumento y un LocalDate fecha
+     * Retorna una lista con todas las jornadas de ese empleado en esa fecha
+     */
     public List<JornadaDTO> obtenerJornadasPorDocumentoYFecha(Long nroDocumento, LocalDate fecha) {
         return jornadaRepository.findByNroDocumentoAndFecha(nroDocumento, fecha)
                 .stream()
@@ -57,6 +64,13 @@ public class JornadaServiceImpl implements JornadaService {
                 .collect(Collectors.toList());
     }
 
+    /*
+     * Funcion obtenerJornadasPorDocumento
+     * Recibe como parametro un numero de documento de un empleado
+     * Setea el nombre completo del empleado y el nombre del concepto
+     * Recibe como parametro un Long nroDocumento
+     * Retorna una lista con todas las jornadas de ese empleado
+     */
     public List<JornadaDTO> obtenerJornadasPorDocumento(Long nroDocumento) {
         return jornadaRepository.findByNroDocumento(nroDocumento)
                 .stream()
@@ -69,6 +83,13 @@ public class JornadaServiceImpl implements JornadaService {
                 .collect(Collectors.toList());
     }
 
+    /*
+     * Funcion obtenerJornadasPorFecha
+     * Recibe como parametro una fecha LocalDate
+     * Setea el nombre completo del empleado y el nombre del concepto
+     * Recibe como parametro de una fecha LocalDate
+     * Retorna una lista con todas las jornadas de ese empleado
+     */
     public List<JornadaDTO> obtenerJornadasPorFecha(LocalDate fecha) {
         return jornadaRepository.findByFecha(fecha)
                 .stream()
@@ -111,7 +132,6 @@ public class JornadaServiceImpl implements JornadaService {
         } else {
             return null;
         }
-
     }
 
 }
