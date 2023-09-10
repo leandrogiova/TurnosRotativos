@@ -33,6 +33,9 @@ public class Jornada {
     @NotNull(message = "")
     @NotBlank(message = "")
     private Integer idConcepto;
+
+    private String nombreConcepto;
+
     @NotNull(message = "")
     @NotBlank(message = "")
     private LocalDate fecha;
@@ -77,6 +80,14 @@ public class Jornada {
         this.nombreCompleto = nombreCompleto;
     }
 
+    public String getNombreConcepto() {
+        return nombreConcepto;
+    }
+
+    public void setNombreConcepto(String nombreConcepto) {
+        this.nombreConcepto = nombreConcepto;
+    }
+
     public Integer getIdConcepto() {
         return idConcepto;
     }
@@ -109,10 +120,9 @@ public class Jornada {
     public JornadaDTO toEmpleadoDTO() {
         JornadaDTO jornadaDTO = new JornadaDTO();
 
-        jornadaDTO.setId(this.id);
         jornadaDTO.setnroDocumento(this.nroDocumento);
         jornadaDTO.setNombreCompleto(this.nombreCompleto);
-        jornadaDTO.setIdConcepto(this.idConcepto);
+        jornadaDTO.setConcepto(this.nombreConcepto);
         jornadaDTO.setFecha(this.fecha);
         jornadaDTO.setHorasTrabajadas(this.horasTrabajadas);
 
@@ -127,9 +137,8 @@ public class Jornada {
     public static JornadaDTO toEmpleadoDTO_Static(Jornada jornada) {
         JornadaDTO jornadaDTO = new JornadaDTO();
 
-        jornadaDTO.setId(jornada.getId());
         jornadaDTO.setnroDocumento(jornada.getNroDocumento());
-        jornadaDTO.setIdConcepto(jornada.getIdConcepto());
+        jornadaDTO.setConcepto(jornada.getNombreConcepto());
         jornadaDTO.setNombreCompleto(jornada.getNombreCompleto());
         jornadaDTO.setFecha(jornada.getFecha());
         jornadaDTO.setHorasTrabajadas(jornada.getHorasTrabajadas());

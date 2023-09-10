@@ -10,7 +10,6 @@ import com.neoris.turnosrotativos.entities.Empleado;
 
 public class EmpleadoDTO {
 
-    private Long id;
     @NotNull(message = "El campo nroDocumento es obligatorio")
     private Long nroDocumento;
     @NotNull(message = "El campo nombre es obligatorio")
@@ -27,14 +26,6 @@ public class EmpleadoDTO {
     @NotNull(message = "El campo fechaIngreso es obligatorio")
     private LocalDate fechaIngreso;
     private LocalDate fechaCreacion;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getNroDocumento() {
         return nroDocumento;
@@ -98,7 +89,6 @@ public class EmpleadoDTO {
     public Empleado toEntity() {
         Empleado entity = new Empleado();
 
-        entity.setId(this.id);
         entity.setNroDocumento(this.nroDocumento);
         entity.setNombre(this.nombre);
         entity.setApellido(this.apellido);

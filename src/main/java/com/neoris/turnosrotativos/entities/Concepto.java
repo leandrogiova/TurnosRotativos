@@ -72,7 +72,6 @@ public class Concepto {
 
     public static ConceptoDTO toConceptoDTO(Concepto conceptoEntity) {
         ConceptoDTO conceptoDTO = new ConceptoDTO();
-        conceptoDTO.setId(conceptoEntity.getId());
         conceptoDTO.setNombre(conceptoEntity.getNombre());
         conceptoDTO.setHsMaximo(conceptoEntity.getHsMaximo());
         conceptoDTO.setHsMinimo(conceptoEntity.getHsMinimo());
