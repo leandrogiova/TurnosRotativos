@@ -35,6 +35,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
      * Recibe un Empleado
      * Retorna un EmpleadoDTO
      */
+    @Override
     public EmpleadoDTO agregarEmpleado(Empleado empleado) {
         if (validarDNI(empleado)) {
             throw new BussinessException("Ya existe un empleado con el documento ingresado.", HttpStatus.CONFLICT);
@@ -79,6 +80,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
      * Funcion obtenerTodosLosEmpleados
      * Retorna una lista con todos los empleados en la base de datos
      */
+    @Override
     public List<EmpleadoDTO> obtenerTodosLosEmpleados() {
         return empleadoRepository.findAll()
                 .stream()
@@ -93,6 +95,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
      * Retorna al empleado o lanza una excepción si el id no se encuentraen la base
      * de datos
      */
+    @Override
     public EmpleadoDTO obtenerEmpleado(Long id) {
         Optional<Empleado> empleado = empleadoRepository.findById(id);
 
@@ -122,6 +125,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
      * Recibe un id de un empleado y el empleadoDTO
      * Retorna un tipo EmpleadoDTO
      */
+    @Override
     public EmpleadoDTO actualizarEmpleado(Long empleadoId, EmpleadoDTO empleadoDTO) {
 
         Empleado empleadoExistente = empleadoRepository.findById(empleadoId).orElse(null);
@@ -179,7 +183,11 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     }
 
     /*
-     * 
+     * funcion Eliminar Empleado
+     * Recibe un numero de id del empleado
+     * Y elimina al empleado de la base de datos
+     * Recibe un Long
+     * No tiene ningun retorno
      */
     public void eliminarEmpleado(Long id) {
         Optional<Empleado> empleado = empleadoRepository.findById(id);
@@ -196,6 +204,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
      * Retorna True si exite el mail y false si el mail no existe en la base de
      * datos
      */
+    @Override
     public Boolean validarDNI(Empleado empleado) {
         if (empleadoRepository.findByNroDocumento(empleado.getNroDocumento()).isPresent()) {
             return true;
@@ -210,6 +219,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
      * Retorna True si exite el mail y false si el mail no existe en la base de
      * datos
      */
+    @Override
     public Boolean validarEmail(Empleado empleado) {
         if (empleadoRepository.findByEmail(empleado.getEmail()).isPresent()) {
             return true;
@@ -219,11 +229,12 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     }
 
     /*
-     * funcion mayorDeEdad
+     * Funcion mayorDeEdad
      * Recibe un empledo y verifica su edad
      * Retorna true si el empleado es mayor de edad o
      * false si el empleado es menor de edad
      */
+    @Override
     public Boolean mayorDeEdad(Empleado empleado) {
         LocalDate fechaActual = LocalDate.now();
         Period periodo = Period.between(empleado.getFechaNacimiento(), fechaActual);
@@ -235,12 +246,13 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     }
 
     /*
-     * funcion validarFecha toma una fecha de tipoi LocalDate
+     * Funcion validarFecha toma una fecha de tipoi LocalDate
      * y se fija que la fecha no sea posterior a la fecha actual
      * Retorna true si la fecha es anterior a la fecha actual, es decir, se ingreso
      * una fecha correctamente
      * false si la fecha es posterior a la fecha actual.
      */
+    @Override
     public Boolean validarFecha(LocalDate fecha) {
         LocalDate fechaActual = LocalDate.now();
         return !fecha.isAfter(fechaActual);
@@ -254,6 +266,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
      * Recibe un String
      * Retorna true si el String contiene solo letras
      */
+    @Override
     public Boolean validarNombreApellido(String stringNombreApellido) {
 
         char primerCaracter = Character.toUpperCase(stringNombreApellido.charAt(0));
@@ -265,7 +278,6 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         // Verifica que el string contenga solamente letras
         for (char c : stringNombreApellido.toCharArray()) {
             if (!Character.isLetter(c)) {
-                System.out.println(stringNombreApellido + " no es válido.");
                 return false;
             }
         }

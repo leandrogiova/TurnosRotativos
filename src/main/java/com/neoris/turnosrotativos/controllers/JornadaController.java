@@ -57,7 +57,13 @@ public class JornadaController {
     }
 
     /*
-     * 
+     * Funcion agregarJornada
+     * Agrega una jornada a la base de datos validando todos los requisitos validos
+     * Los requisitos se explican en 'jornadaService.agregarJornada'
+     * Antes de retornar setea el IdConcepto en null y el IdEmpleado en null para no
+     * exponer los datos sencibles hacia afuera
+     * Recibe una JornadaDTO
+     * Retorna ResponseEntity<JornadaDTO> con un status 201 CREATED si sale todo ok
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<JornadaDTO> agregarJornada(@Valid @RequestBody JornadaDTO jornadaDTO) {

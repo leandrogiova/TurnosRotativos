@@ -128,6 +128,7 @@ public class Empleado {
     public static EmpleadoDTO toEmpleadoDTO_Static(Empleado empleado) {
         EmpleadoDTO empleadoDTO = new EmpleadoDTO();
 
+        empleadoDTO.setId(empleado.getId());
         empleadoDTO.setNroDocumento(empleado.getNroDocumento());
         empleadoDTO.setNombre(empleado.getNombre());
         empleadoDTO.setApellido(empleado.getApellido());
@@ -147,6 +148,7 @@ public class Empleado {
     public EmpleadoDTO toEmpleadoDTO() {
         EmpleadoDTO empleadoDTO = new EmpleadoDTO();
 
+        empleadoDTO.setId(this.id);
         empleadoDTO.setNroDocumento(this.nroDocumento);
         empleadoDTO.setNombre(this.nombre);
         empleadoDTO.setApellido(this.apellido);

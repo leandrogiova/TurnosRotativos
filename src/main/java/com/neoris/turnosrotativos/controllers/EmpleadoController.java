@@ -27,7 +27,12 @@ public class EmpleadoController {
     private EmpleadoServiceImpl empleadoService;
 
     /*
-     * 
+     * Funcion agregarEmpleado
+     * Agrega un empleado a la base de datos
+     * Llamando al service pasandole un EmpleadoDTO
+     * Recibe como parametro un empleadoDTO
+     * Retorna un ResponseEntity con la entidad empleadoDTO, retorna status 201
+     * CREATED si sale todo ok
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<EmpleadoDTO> agregarEmpleado(@Valid @RequestBody EmpleadoDTO empleadoDTO) {
@@ -37,7 +42,11 @@ public class EmpleadoController {
     }
 
     /*
-     * 
+     * Funcion obtenerTodosLosEmpleados
+     * Obtiene todos los empleados de la base de datos
+     * No recibe parametros
+     * Retorna ResponseEntity con una lista List<EmpleadoDTO>. Retorna 200 OK si
+     * sale todo OK
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<EmpleadoDTO>> obtenerTodosLosEmpleados() {
@@ -45,7 +54,14 @@ public class EmpleadoController {
     }
 
     /*
-     * 
+     * Funcion obtenerEmpleado
+     * Obtiene un empleado a través de su ID
+     * Recibe un String id y lo setea a un tipo Long
+     * El ID del empleado es de tipo Long
+     * Retorna ResponseEntity<EmpleadoDTO> si se encontro al empleado.
+     * Retorna 200 OK
+     * Si no se encuentra al empleado se lanzara una Exception, retorna NOT_FOUND
+     * 404
      */
     @GetMapping("/{empleadoId}")
     public ResponseEntity<EmpleadoDTO> obtenerEmpleado(@PathVariable("empleadoId") String stringId) {
@@ -85,10 +101,15 @@ public class EmpleadoController {
     }
 
     /*
-     * 
+     * Funcion eliminarEmpleado
+     * Elimina un empleado de la base de datos
+     * Recibe el id del empleado a eliminar. Recibe un String y va a setear el
+     * Long del id del Empleado
+     * Retorna un ResponseEntity<HttpStatus> 204 si sale todo bien
+     * o NOT_FOUND 404 si el id no existe en la base de datos
      */
     @DeleteMapping("/{empleadoId}")
-    public ResponseEntity<HttpStatus> eliminarEmpleado(@PathVariable("empleadoId") String stringId) {
+    public ResponseEntity<String> eliminarEmpleado(@PathVariable("empleadoId") String stringId) {
         Long id_;
 
         try {
@@ -97,7 +118,8 @@ public class EmpleadoController {
             throw new BussinessException("El id del empleado en la URI contiene caracteres.", HttpStatus.CONFLICT);
         }
         this.empleadoService.eliminarEmpleado(id_);
-        return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
+
+        return new ResponseEntity<>("El empleado fue eliminado con éxito", HttpStatus.OK);
     }
 
 }

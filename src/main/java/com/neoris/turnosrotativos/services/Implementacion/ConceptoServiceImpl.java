@@ -21,6 +21,7 @@ public class ConceptoServiceImpl implements ConceptoService {
      * Funcion obtenerTodosLosConceptos
      * Retorna una lista con todos los conceptos en la base de datos
      */
+    @Override
     public List<ConceptoDTO> obtenerTodosLosConceptos() {
         return conceptoRepository.findAll()
                 .stream()

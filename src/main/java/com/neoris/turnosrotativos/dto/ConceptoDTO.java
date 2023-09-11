@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.neoris.turnosrotativos.entities.Concepto;
 
 public class ConceptoDTO {
+    private Integer id;
 
     private String nombre;
     private Boolean laborable;
@@ -22,6 +23,14 @@ public class ConceptoDTO {
         this.laborable = laborable;
         this.hsMinimo = hsMinimo;
         this.hsMaximo = hsMaximo;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -58,6 +67,7 @@ public class ConceptoDTO {
 
     public Concepto toEntity() {
         Concepto concepto = new Concepto();
+        concepto.setId(this.id);
         concepto.setNombre(this.nombre);
         concepto.setHsMaximo(this.hsMaximo);
         concepto.setHsMinimo(this.hsMinimo);

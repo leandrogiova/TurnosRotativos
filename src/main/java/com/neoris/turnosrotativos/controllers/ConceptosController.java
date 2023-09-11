@@ -20,6 +20,10 @@ public class ConceptosController {
     @Autowired
     private ConceptoServiceImpl conceptoService;
 
+    /*
+     * Funcion obtenerTodosLosEmpleados
+     * Retorna todos los conceptos de la base de datos
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<ConceptoDTO>> obtenerTodosLosEmpleados() {
 
