@@ -205,9 +205,9 @@ public class JornadaServiceImpl implements JornadaService {
 
         List<Jornada> joranadas = jornadaRepository.findByNroDocumentoAndFechaBetween(jornada.getNroDocumento(),
                 fechas[0], fechas[1]);
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
         for (Jornada j : joranadas) {
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n entre contando...");
+
             if (j.getIdConcepto() == 1)
                 contadorTurnosNormales++;
             else if (j.getIdConcepto() == 2)
@@ -215,12 +215,6 @@ public class JornadaServiceImpl implements JornadaService {
             else if (j.getIdConcepto() == 3) {
                 contadorTurnosDiasLibres++;
             }
-
-            System.out.println("\n\n\n\n\n\ncontadorTurnosExtra:" + contadorTurnosExtra
-                    + "contadorTurnosNormales: " + contadorTurnosNormales
-                    + " contadorTurnosDiasLibres:  " + contadorTurnosDiasLibres
-
-            );
 
         }
 
