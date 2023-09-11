@@ -143,9 +143,9 @@ public class JornadaServiceImpl implements JornadaService {
             fechaFinSemana = fechaFinSemana.plusDays(1);
         }
 
-        System.out.println("\nFecha: " + fecha);
-        System.out.println("Fecha de inicio de semana: " + fechaInicioSemana);
-        System.out.println("Fecha de fin de semana: " + fechaFinSemana + "\n");
+        // System.out.println("\nFecha: " + fecha);
+        // System.out.println("Fecha de inicio de semana: " + fechaInicioSemana);
+        // System.out.println("Fecha de fin de semana: " + fechaFinSemana + "\n");
 
         fechas[0] = fechaInicioSemana;
         fechas[1] = fechaFinSemana;
@@ -205,14 +205,23 @@ public class JornadaServiceImpl implements JornadaService {
 
         List<Jornada> joranadas = jornadaRepository.findByNroDocumentoAndFechaBetween(jornada.getNroDocumento(),
                 fechas[0], fechas[1]);
-
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         for (Jornada j : joranadas) {
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n entre contando...");
             if (j.getIdConcepto() == 1)
                 contadorTurnosNormales++;
             else if (j.getIdConcepto() == 2)
                 contadorTurnosExtra++;
-            else if (j.getIdConcepto() == 3)
+            else if (j.getIdConcepto() == 3) {
                 contadorTurnosDiasLibres++;
+            }
+
+            System.out.println("\n\n\n\n\n\ncontadorTurnosExtra:" + contadorTurnosExtra
+                    + "contadorTurnosNormales: " + contadorTurnosNormales
+                    + " contadorTurnosDiasLibres:  " + contadorTurnosDiasLibres
+
+            );
+
         }
 
         if (jornada.getIdConcepto() == 1 && contadorTurnosNormales == 5) {
