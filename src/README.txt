@@ -262,7 +262,7 @@ Ejemplo 8: Obtener Jornadas
   -- Para obtener todas las jornadas de un empleado en una fecha especifica: GET http://localhost:8080/jornada?nrodocumento=10&fecha=2023-01-01
 
 
---------------------Response: 200 OK
+--------------------Re  onse: 200 OK
 [
   {
       "nroDocumento": 30415654,
@@ -272,6 +272,18 @@ Ejemplo 8: Obtener Jornadas
       "horasTrabajadas": 8
     }
 ]
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -303,6 +315,21 @@ json
 Conclusión: usar "nroDocumento" para evitar errores.
 
 
+
+ATENCIÓN 
+Al hacer GET de jornada la variable nroDocumento va con la 'D' mayuculas como figura en stoplight
+http://localhost:8080/jornada?nroDocumento=40276969&fecha=2023-07-08
+
+
+stoplight :
+/jornada?nroDocumento=32135640 -> retorna las jornadas del empleado que coincide con el documento.
+
+
+
+
+
+
+
 ¡Aclaracion!
 En la Clase 'EmpleadoController' y 'eliminarEmpleado' en el metodo 'obtenerEmpleado' se recibe 
 un String como id ya que se entiende que si en la URI llega un caracter se debe lanzar una excepción
@@ -319,4 +346,8 @@ Response:
     "timestamp": "2023-09-11T04:40:16.131+00:00",
     "message": "El id del empleado en la URI contiene caracteres."
 }
+
+
+
+
 
